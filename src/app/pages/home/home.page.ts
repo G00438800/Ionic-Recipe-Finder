@@ -22,6 +22,10 @@ export class HomePage {
 
   constructor(private spoonacular: SpoonacularService, private router: Router) {}
 
+  goToHome() {
+  this.router.navigateByUrl('/home');
+}
+
   goToSettings() {
     this.router.navigateByUrl('/settings');
   }

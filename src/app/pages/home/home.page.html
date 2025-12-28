@@ -15,6 +15,27 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" color="primary" (click)="goToHome()">
+        Home
+      </ion-button>
+    </ion-col>
+
+    <ion-col>
+      <ion-button expand="block" color="danger" (click)="goToFavourites()">
+        Favourites
+      </ion-button>
+    </ion-col>
+
+    <ion-col>
+      <ion-button expand="block" color="medium" (click)="goToSettings()">
+        Settings
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
   <ion-item>
     <ion-label position="stacked">Enter Ingredients</ion-label>

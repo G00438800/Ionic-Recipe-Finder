@@ -1,20 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+
+import { SettingsService, Measurement } from '../../services/settings.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage {
+  measurement: Measurement = 'metric'; // default shown until loaded
+  loading = true;
 
-  constructor() { }
+  constructor(private settings: SettingsService, private router: Router) {}
 
-  ngOnInit() {
+  async ionViewWillEnter() {
+    // Load the stored value (defaults to metric inside service)
+    this.loading = true;
+    this.measurement = await this.settings.getMeasurement();
+    this.loading = false;
   }
 
+  async onMeasurementChange(value: Measurement) {
+    this.measurement = value;
+    await this.settings.setMeasurement(value);
+  }
+
+  back() {
+    this.router.navigateByUrl('/home');
+  }
 }
