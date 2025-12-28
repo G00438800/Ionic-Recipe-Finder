@@ -1,13 +1,68 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>recipe-details</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Recipe Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">recipe-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div *ngIf="loading" class="ion-text-center">
+    <ion-spinner></ion-spinner>
+    <p>Loading recipe...</p>
+  </div>
+
+  <div *ngIf="!loading && recipe">
+    <ion-card>
+      <img [src]="recipe.image" [alt]="recipe.title" />
+      <ion-card-header>
+        <ion-card-title>{{ recipe.title }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <h2>Ingredients ({{ measurement === 'us' ? 'US' : 'Metric' }})</h2>
+
+    <ion-list>
+      <ion-item *ngFor="let ing of recipe.extendedIngredients">
+        <ion-thumbnail slot="start">
+          <img
+            [src]="'https://spoonacular.com/cdn/ingredients_100x100/' + ing.image"
+            [alt]="ing.original"
+          />
+        </ion-thumbnail>
+
+        <ion-label>
+          <h3>{{ ing.original }}</h3>
+          <p>{{ getAmountUnit(ing) }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <h2>Instructions</h2>
+
+    <ion-list *ngIf="steps.length; else noSteps">
+      <ion-item *ngFor="let s of steps">
+        <ion-label>
+          <h3>Step {{ s.number }}</h3>
+          <p>{{ s.step }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noSteps>
+      <p>No instructions available for this recipe.</p>
+    </ng-template>
+
+    <ion-button expand="block" class="ion-margin-top" (click)="toggleFavourite()">
+      {{ favButtonText }}
+    </ion-button>
+  </div>
+
+  <div *ngIf="!loading && !recipe">
+    <p>Could not load this recipe. Please go back and try again.</p>
+  </div>
 </ion-content>
