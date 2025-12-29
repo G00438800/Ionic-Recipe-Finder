@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { heart, settings } from 'ionicons/icons';
 
 import { SpoonacularService } from '../../services/spoonacular.service';
 
@@ -19,6 +20,8 @@ export class HomePage {
   results: any[] = [];
   loading = false;
   errorMessage = '';
+  heartIcon = heart;
+  settingsIcon = settings;
 
   constructor(private spoonacular: SpoonacularService, private router: Router) {}
 

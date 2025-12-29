@@ -1,56 +1,20 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>{{ studentNumber }}</ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button (click)="goToFavourites()">
-        <ion-icon name="heart" slot="icon-only"></ion-icon>
-      </ion-button>
-
-      <ion-button (click)="goToSettings()">
-        <ion-icon name="settings" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>
+      Blank
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-  <ion-item>
-    <ion-label position="stacked">Enter Ingredients</ion-label>
-    <ion-input
-      [(ngModel)]="ingredients"
-      placeholder="carrots,beef,potatoes">
-    </ion-input>
-  </ion-item>
-
-  <ion-button expand="block" class="ion-margin-top" (click)="search()">
-    Search
-  </ion-button>
-
-  <ion-text color="danger" *ngIf="errorMessage">
-    <p>{{ errorMessage }}</p>
-  </ion-text>
-
-  <div class="ion-margin-top" *ngIf="loading">
-    <ion-spinner></ion-spinner>
-    <p>Loading recipes...</p>
+  <div id="container">
+    <strong>Ready to create an app?</strong>
+    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
-
-  <ion-list *ngIf="!loading && results.length">
-    <ion-item *ngFor="let r of results">
-      <ion-thumbnail slot="start">
-        <img [src]="r.image" [alt]="r.title" />
-      </ion-thumbnail>
-
-      <ion-label>
-        <h2>{{ r.title }}</h2>
-      </ion-label>
-
-      <ion-button slot="end" (click)="openDetails(r.id)">
-        Details
-      </ion-button>
-    </ion-item>
-  </ion-list>
-
 </ion-content>
