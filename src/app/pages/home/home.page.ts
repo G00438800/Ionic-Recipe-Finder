@@ -41,22 +41,21 @@ export class HomePage {
     this.router.navigate(['/recipe-details', recipeId]);
   }
 
-  async search() {
+  async search() {//calling the API
     this.errorMessage = '';
     const query = this.ingredients.trim();
 
-    if (!query) {
+    if (!query) {//prevent empty searches
       this.results = [];
       this.errorMessage = 'Please enter at least one ingredient.';
       return;
     }
 
     this.loading = true;
-    this.results = [];
+    this.results = [];//to clear any old search results
 
     try {
-      // returns JSON ARRAY of recipes
-      this.results = await this.spoonacular.searchRecipes(query);
+      this.results = await this.spoonacular.searchRecipes(query);//calls the API
     } catch (err) {
       console.error(err);
       this.errorMessage = 'Could not load recipes. Please try again.';

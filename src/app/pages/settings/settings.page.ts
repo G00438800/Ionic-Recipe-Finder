@@ -13,24 +13,24 @@ import { SettingsService, Measurement } from '../../services/settings.service';
   imports: [IonicModule, CommonModule],
 })
 export class SettingsPage {
-  measurement: Measurement = 'metric'; // default shown until loaded
+  measurement: Measurement = 'metric'; //default shown until loaded
   loading = true;
 
   constructor(private settings: SettingsService, private router: Router) {}
 
   async ionViewWillEnter() {
-    // Load the stored value (defaults to metric inside service)
+    //load the stored value
     this.loading = true;
     this.measurement = await this.settings.getMeasurement();
     this.loading = false;
   }
 
-  async onMeasurementChange(value: Measurement) {
+  async onMeasurementChange(value: Measurement) {//runs when the user selects the choice
     this.measurement = value;
     await this.settings.setMeasurement(value);
   }
 
-  back() {
+  back() {//back to the home page
     this.router.navigateByUrl('/home');
   }
 }

@@ -18,13 +18,13 @@ export class FavouritesPage {
 
   constructor(private favs: FavouritesService, private router: Router) {}
 
-  async ionViewWillEnter() {
+  async ionViewWillEnter() {//reloads the favourites page
     this.loading = true;
     this.favourites = await this.favs.getAll();
     this.loading = false;
   }
 
-  back() {
+  back() {//back to home page
     this.router.navigateByUrl('/home');
   }
 

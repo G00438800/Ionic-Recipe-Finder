@@ -21,7 +21,7 @@ export class RecipeDetailsPage {
   loading = true;
   recipe: any = null;
 
-  measurement: Measurement = 'metric'; // default until loaded
+  measurement: Measurement = 'metric'; //default until loaded
   steps: { number: number; step: string }[] = [];
 
   isFav = false;
@@ -38,21 +38,17 @@ export class RecipeDetailsPage {
   async ionViewWillEnter() {
     this.loading = true;
 
-    // 1) get the id from URL
-    this.recipeId = Number(this.route.snapshot.paramMap.get('id'));
+   this.recipeId = Number(this.route.snapshot.paramMap.get('id')); //get the id from URL
 
-    // 2) load measurement setting
-    this.measurement = await this.settings.getMeasurement();
+    this.measurement = await this.settings.getMeasurement();//load measurement setting
 
-    // 3) load recipe details from API
-    try {
+    try {//load recipe details from API
       this.recipe = await this.api.getRecipeDetails(this.recipeId);
       this.isFav = await this.favs.isFavourite(this.recipe.id);
       this.favButtonText = this.isFav ? 'Remove From Favourites' : 'Add to Favourites';
 
 
-      // flatten instructions safely (JSON arrays inside arrays)
-      const blocks = this.recipe?.analyzedInstructions ?? [];
+     const blocks = this.recipe?.analyzedInstructions ?? []; //JSON arrays inside arrays
       this.steps = blocks.flatMap((b: any) => b?.steps ?? []);
     } catch (err) {
       console.error('Failed to load recipe details', err);
@@ -67,8 +63,7 @@ export class RecipeDetailsPage {
     this.router.navigateByUrl('/home');
   }
 
-  // Helper to display amount + unit based on measurement selected
-  getAmountUnit(ing: any): string {
+  getAmountUnit(ing: any): string {//display amount + unit based on measurement selected
     if (!ing?.measures) return '';
     const m = this.measurement === 'us' ? ing.measures.us : ing.measures.metric;
     const amount = m?.amount ?? '';
@@ -76,7 +71,6 @@ export class RecipeDetailsPage {
     return `${amount} ${unit}`.trim();
   }
 
-  // This button will be fully wired in Step 8
   async toggleFavourite() {
   if (!this.recipe) return;
 

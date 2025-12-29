@@ -9,12 +9,14 @@ export class SettingsService {
 
   constructor(private storageInit: StorageInitService) {}
 
+  //method to take the user's choice for measurement
   async getMeasurement(): Promise<Measurement> {
     const store = this.storageInit.store;
     const value = await store.get(this.key);
     return value === 'us' ? 'us' : 'metric'; // default metric
   }
 
+  //method to remember the user's choice
   async setMeasurement(value: Measurement): Promise<void> {
     const store = this.storageInit.store;
     await store.set(this.key, value);

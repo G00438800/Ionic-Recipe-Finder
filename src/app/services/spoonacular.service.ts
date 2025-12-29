@@ -1,36 +1,39 @@
 import { Injectable } from '@angular/core';
-import { CapacitorHttp } from '@capacitor/core';
+import { CapacitorHttp } from '@capacitor/core';//for web requests
 
 @Injectable({ providedIn: 'root' })
 export class SpoonacularService {
-  private apiKey = '70759a4f7911402abcc53d3c51d3b759';
+  private apiKey = '70759a4f7911402abcc53d3c51d3b759';//API key
   private baseUrl = 'https://api.spoonacular.com';
 
   constructor() {}
 
-  //Search recipes by ingredients (Home Page)
+  //method to search recipes by ingredient
   async searchRecipes(ingredients: string): Promise<any[]> {
-    const url =
+    const url = //using the API search
       `${this.baseUrl}/recipes/complexSearch` +
       `?apiKey=${this.apiKey}` +
       `&query=${encodeURIComponent(ingredients)}`;
 
-    const response = await CapacitorHttp.get({ url });
+    const response = await CapacitorHttp.get({ url });//GETrequest to Spoonacular
 
-    //response.data is a JSON OBJECT
-    //response.data.results is a JSON ARRAY
-    return response.data?.results ?? [];
+   
+    return response.data?.results ?? [];//returns an array of recipes
   }
 
-  //Get full recipe details (Recipe Details Page)
-  async getRecipeDetails(id: number): Promise<any> {
+  async getRecipeDetails(id: number): Promise<any> {//gets the recipe details 
     const url =
-      `${this.baseUrl}/recipes/${id}/information` +
+      `${this.baseUrl}/recipes/${id}/information` + //request for detailed info on a recipe
       `?apiKey=${this.apiKey}`;
 
-    const response = await CapacitorHttp.get({ url });
+    const response = await CapacitorHttp.get({ url }); //returns the recipe 
 
-    //response.data is a JSON OBJECT (recipe)
-    return response.data;
+      return response.data;  //response.data is a JSON OBJECT 
   }
 }
+
+/**
+ * References: 
+ * 1. https://capacitorjs.com/docs/apis/http
+ * 2. https://publicapi.dev/spoonacular-api
+ */
